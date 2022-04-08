@@ -44,13 +44,25 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() 
   {
-      // RawColor rc0 = colorSensor.getRawColor0();
-      // System.out.println("color 1 " + rc0.red);
+      RawColor rc0 = colorSensor.getRawColor0();
+     // System.out.println("color 1 " + rc0.red);
+      int red0 = rc0.red;
+      int green0 = rc0.green;
+      int blue0 = rc0.blue;
+
+      int higher = Math.max(red0, blue0);
+      if ( red0 > 300){
+        System.out.println(blue0);
+      }
+      else {
+        System.out.println(blue0);
+      }
+      
       // RawColor rc1 = colorSensor.getRawColor1();
       // System.out.println("color 2 " + rc1.red);
 
-      int proximity0 = colorSensor.getProximity0();
-      System.out.println("proximity 1 " + proximity0);
+      // int proximity0 = colorSensor.getProximity0();
+      // System.out.println("proximity 1 " + proximity0);
       // int proximity1 = colorSensor.getProximity1();
       // System.out.println("proximity 2 " + proximity1);
   }
