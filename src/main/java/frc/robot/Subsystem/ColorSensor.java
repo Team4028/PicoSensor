@@ -23,6 +23,9 @@ public class ColorSensor extends SubsystemBase {
   private int blueThreshold1 = 400;
   private int proximityThreshold1 = 180;
 
+  private boolean ball0Detected;
+  private boolean ball1Detected;
+
   private static ColorSensor _instance = new ColorSensor();
 
   /** Creates a new ColorSensor. */
@@ -65,6 +68,7 @@ public class ColorSensor extends SubsystemBase {
     SmartDashboard.putNumber("proximity 0", proximity0);
     SmartDashboard.putNumber("total red balls", redBalls);
     SmartDashboard.putNumber("total blue balls", blueBalls);
+    ball0Detected = proximity0 > proximityThreshold0;
 
   }
 
@@ -89,11 +93,13 @@ public class ColorSensor extends SubsystemBase {
     SmartDashboard.putNumber("red 1", red1);
     SmartDashboard.putNumber("blue 1", blue1);
     SmartDashboard.putNumber("proximity 1", proximity1);
+    ball1Detected = proximity1 > proximityThreshold1;
   }
 
 public static ColorSensor getInstance(){
   return _instance;
 }
+
 
 
   @Override
