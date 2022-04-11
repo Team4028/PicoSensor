@@ -5,10 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.PicoColorSensor.RawColor;
+import frc.robot.Subsystem.ColorSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,11 +21,6 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  private PicoColorSensor colorSensor = new PicoColorSensor();
-  private int redBalls = 0;
-  private int blueBalls = 0;
-  private boolean redBallFoundLastCycle;
-  private boolean blueBallFoundLastCycle;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -50,53 +44,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    RawColor rc0 = colorSensor.getRawColor0();
-    // System.out.println("color 1 " + rc0.red);
-    int red0 = rc0.red;
-    int green0 = rc0.green;
-    int blue0 = rc0.blue;
-    int proximity0 = colorSensor.getProximity0();
-
-    int higher = Math.max(red0, blue0);
-
-    if (proximity0 > 120) {
-      //SmartDashboard.putBoolean("red ball", red0 > 300 && higher == red0);
-     // SmartDashboard.putBoolean("blue ball", blue0 > 350 && higher == blue0);
-      if (red0 > 300 && higher == red0) {
-        SmartDashboard.putBoolean("red ball", true);
-        if (!redBallFoundLastCycle) {
-          redBalls++;
-        }
-        redBallFoundLastCycle = true;
-      }
-      if (blue0 > 350 && higher == blue0) {
-        SmartDashboard.putBoolean("blue ball", true);
-        if (!blueBallFoundLastCycle) {
-          blueBalls++;
-        }
-        blueBallFoundLastCycle = true;
-      }
-    } else {
-      redBallFoundLastCycle = false;
-      blueBallFoundLastCycle = false;
-      SmartDashboard.putBoolean("red ball", false);
-      SmartDashboard.putBoolean("blue ball", false);
-    }
-
-    SmartDashboard.putBoolean("Ball detected", proximity0 > 120);
-    SmartDashboard.putNumber("red", red0);
-    SmartDashboard.putNumber("blue", blue0);
-    SmartDashboard.putNumber("proximity", proximity0);
-    SmartDashboard.putNumber("total red balls", redBalls);
-    SmartDashboard.putNumber("total blue balls", blueBalls);
-
-    // RawColor rc1 = colorSensor.getRawColor1();
-    // System.out.println("color 2 " + rc1.red);
-
-    // int proximity0 = colorSensor.getProximity0();
-    // System.out.println("proximity 1 " + proximity0);
-    // int proximity1 = colorSensor.getProximity1();
-    // System.out.println("proximity 2 " + proximity1);
+  
+    ColorSensor.getInstance().updateSensor0();
+    ColorSensor.getInstance().updateSensor1();
   }
 
   /**
